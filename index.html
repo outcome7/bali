@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дизайн бумажного каталога — Муслим Ибраков</title>
+<style>
+:root{color-scheme:light;--acc:#7d1230;--acc2:#5e0d24;--ink:#1d1d1f;--grey:#f5f5f7;--mute:#6e6e73;--line:#d2d2d7;
+--f:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","Segoe UI",Roboto,Arial,sans-serif;
+--w:min(1080px,100% - 40px);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;scroll-behavior:smooth;scroll-padding-top:calc(56px + env(safe-area-inset-top,0px))}
+*,*::before,*::after{box-sizing:inherit;margin:0;padding:0}
+body{background:#fff;color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.47;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.wrap{width:var(--w);margin-inline:auto}
+section{padding:clamp(72px,10vw,120px) 0}
+.grey{background:var(--grey)}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(255,255,255,.78);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08);padding-top:env(safe-area-inset-top,0px)}
+.nav .wrap{height:48px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px}
+.nav b{font-weight:600;font-size:15px;letter-spacing:-.02em}
+.nav nav{display:flex;gap:32px;color:#424245}
+.nav nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--acc);color:#fff;font-weight:500;border-radius:980px;padding:12px 24px;font-size:17px;transition:background .25s,transform .25s}
+.btn:hover{background:var(--acc2)}
+.btn.sm{padding:6px 14px;font-size:13px}
+.btn:active{transform:scale(.97)}
+
+/* hero */
+.hero{padding-top:calc(110px + env(safe-area-inset-top,0px));padding-bottom:0;text-align:center;overflow:hidden}
+h1{font-weight:700;font-size:clamp(44px,8.4vw,96px);line-height:1.04;letter-spacing:-.045em}
+h1 .w{display:inline-block;opacity:0;transform:translateY(28px);animation:up .9s cubic-bezier(.2,.7,.1,1) forwards;animation-delay:calc(var(--i)*110ms + 100ms)}
+@keyframes up{to{opacity:1;transform:none}}
+.hero p.sub{font-size:clamp(19px,2.4vw,28px);font-weight:500;color:var(--mute);letter-spacing:-.02em;margin:22px auto 32px;max-width:24em;opacity:0;animation:up .9s ease .6s forwards}
+.hero .btn{opacity:0;animation:up .9s ease .8s forwards}
+
+/* catalog mockup */
+.stage{position:relative;height:clamp(250px,44vw,460px);margin-top:clamp(40px,6vw,72px);animation:float 7s ease-in-out 2s infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.pg{position:absolute;left:50%;bottom:-8%;width:clamp(150px,27vw,300px);aspect-ratio:3/4;border-radius:14px;background:#fff;box-shadow:0 40px 70px -24px rgba(0,0,0,.32),0 0 0 1px rgba(0,0,0,.05);padding:clamp(10px,1.8vw,20px);display:flex;flex-direction:column;gap:clamp(6px,1vw,12px);opacity:0;transform:translateX(-50%) scale(.9);animation:fan 1.3s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*160ms + 700ms)}
+@keyframes fan{to{opacity:1;transform:translateX(calc(-50% + var(--x))) rotate(var(--r))}}
+.pg i{display:block;height:clamp(5px,.9vw,10px);background:#e8e8ed;border-radius:6px}
+.pg i.s{width:60%}
+.pg i.img{height:42%;border-radius:10px;background:#e8e8ed}
+.pg.l{--x:-62%;--r:-9deg}
+.pg.r{--x:62%;--r:9deg}
+.pg.c{--x:0%;--r:0deg;z-index:2;background:linear-gradient(160deg,#9a1a3f,var(--acc) 55%,var(--acc2));box-shadow:0 50px 80px -24px rgba(94,13,36,.55)}
+.pg.c::after{content:"";position:absolute;right:-18%;bottom:-14%;width:70%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.12)}
+.pg.c i{background:rgba(255,255,255,.85);width:46%;height:clamp(6px,1.1vw,12px)}
+.pg.r i.img{background:var(--ink);height:56%}
+
+/* headings */
+h2{font-weight:700;font-size:clamp(34px,5.6vw,64px);line-height:1.06;letter-spacing:-.04em;text-align:center}
+.lede{font-size:clamp(19px,2.2vw,26px);font-weight:500;color:var(--mute);text-align:center;letter-spacing:-.02em;margin-top:10px}
+.head{margin-bottom:clamp(36px,5vw,64px)}
+
+/* tiles */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.bento.two{grid-template-columns:repeat(2,1fr)}
+.tile{background:#fff;border-radius:28px;padding:clamp(26px,3.4vw,44px);min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
+.grey .tile{background:#fff}
+section:not(.grey) .tile{background:var(--grey)}
+.tile:hover{transform:scale(1.012)}
+.tile.dark{background:var(--ink)!important;color:#fff}
+.tile.acc{background:var(--acc)!important;color:#fff}
+.tile h3{font-size:clamp(21px,2.2vw,28px);font-weight:600;letter-spacing:-.025em;line-height:1.15}
+.tile .big{font-weight:700;font-size:clamp(52px,7vw,92px);line-height:1;letter-spacing:-.05em;margin-top:32px}
+.tile .big small{font-size:.38em;font-weight:600;letter-spacing:-.02em;margin-left:.15em}
+.tile .cap{font-size:17px;color:var(--mute);margin-top:6px}
+.tile.dark .cap,.tile.acc .cap{color:rgba(255,255,255,.7)}
+.span2{grid-column:span 2}
+.sp{min-height:0}
+
+/* lists */
+.inc{list-style:none;margin-top:24px}
+.inc li{padding:11px 0;border-top:1px solid var(--line);font-size:16px}
+.dark .inc li{border-color:rgba(255,255,255,.18)}
+.price{font-weight:700;font-size:clamp(38px,5vw,60px);letter-spacing:-.045em;line-height:1;margin-top:20px}
+.price small{font-size:.4em;font-weight:600;letter-spacing:-.02em;color:var(--mute);margin-right:.35em}
+.dark .price small{color:rgba(255,255,255,.65)}
+.note{font-size:15px;color:var(--mute);margin-top:18px;line-height:1.45}
+.clients{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;margin-top:20px}
+.clients li{padding:14px 0;border-top:1px solid var(--line);font-size:clamp(17px,1.9vw,22px);font-weight:500;letter-spacing:-.02em}
+.list{background:#fff;border-radius:28px;padding:clamp(8px,1.5vw,16px) clamp(22px,3.4vw,44px);margin-top:20px}
+.row{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:20px 0;border-top:1px solid var(--line);font-size:clamp(17px,1.9vw,21px);font-weight:500;letter-spacing:-.02em}
+.row:first-child{border-top:0}
+.row span{color:var(--acc);font-weight:600;white-space:nowrap}
+.row span.m{color:var(--mute);font-weight:500}
+
+/* cases */
+.cta{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:28px;border-radius:32px;padding:clamp(56px,10vw,120px) 24px;background:radial-gradient(120% 140% at 20% 0%,#a01d44,var(--acc) 45%,var(--acc2));color:#fff;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.cta:hover{transform:scale(1.012)}
+.cta h2{color:#fff}
+.arr{width:56px;height:56px;border-radius:50%;background:#fff;color:var(--acc);display:grid;place-items:center;font-size:26px;transition:transform .35s}
+.cta:hover .arr{transform:translateX(8px)}
+.tail{height:48px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(40px) scale(.98);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0)*100ms)}
+.rv.on{opacity:1;transform:none}
+.tile.rv.on:hover{transform:scale(1.012)}
+
+@media(max-width:860px){
+section{padding:clamp(56px,12vw,80px) 0}
+.nav nav{display:none}
+.nav .wrap{height:52px}
+.btn.sm{padding:9px 16px;font-size:14px}
+.bento,.bento.two{grid-template-columns:1fr;gap:14px}
+.span2{grid-column:auto}
+.tile{min-height:0;gap:24px;border-radius:24px}
+.tile .big{margin-top:20px}
+.clients{grid-template-columns:1fr}
+.clients li{padding:12px 0}
+.head{margin-bottom:32px}
+.list{border-radius:24px;margin-top:14px}
+.row{padding:16px 0;font-size:17px}
+.cta{border-radius:24px;gap:22px}
+.hero{padding-top:calc(88px + env(safe-area-inset-top,0px))}
+.hero p.sub{margin:16px auto 26px}
+.stage{height:clamp(220px,62vw,360px)}
+.pg{width:38vw;border-radius:10px}
+.pg.l{--x:-60%;--r:-8deg}.pg.r{--x:60%;--r:8deg}
+}
+@media(max-width:380px){
+.tile{padding:22px}
+.tile .big{font-size:48px}
+.price{font-size:36px}
+.hero p.sub{font-size:18px}
+}
+@media(hover:none){
+.tile:hover,.tile.rv.on:hover,.cta:hover{transform:none}
+.cta:hover .arr{transform:none}
+.btn:hover{background:var(--acc)}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+h1 .w,.hero p.sub,.hero .btn,.pg{animation:none;opacity:1}
+.pg.l{transform:translateX(calc(-50% + var(--x))) rotate(var(--r))}
+.pg.r{transform:translateX(calc(-50% + var(--x))) rotate(var(--r))}
+.pg.c{transform:translateX(-50%)}
+h1 .w{transform:none}.stage{animation:none}
+.rv{transition:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <b>Муслим Ибраков</b>
+    <nav><a href="#catalog">Каталог</a><a href="#about">Обо мне</a><a href="#services">Услуги</a></nav>
+    <a class="btn sm" href="https://ibrakovportfolio.tilda.ws/" target="_blank" rel="noopener">Смотреть кейсы</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1><span class="w" style="--i:0">Дизайн</span> <span class="w" style="--i:1">бумажного</span> <span class="w" style="--i:2">каталога.</span></h1>
+    <p class="sub">Индивидуальный дизайн под ваш бренд, а не шаблон.</p>
+    <a class="btn" href="#catalog">Стоимость</a>
+    <div class="stage" aria-hidden="true">
+      <div class="pg l" style="--i:0"><i class="img"></i><i></i><i></i><i class="s"></i></div>
+      <div class="pg r" style="--i:1"><i></i><i class="s"></i><i class="img"></i><i></i></div>
+      <div class="pg c" style="--i:2"><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="grey" id="catalog">
+  <div class="wrap">
+    <div class="head rv"><h2>Стоимость.</h2></div>
+    <div class="bento">
+      <div class="tile rv" style="--d:0">
+        <h3>Слайд каталога</h3>
+        <div><div class="big"><span data-count="1100">1&nbsp;100</span><small>₽</small></div><p class="cap">за слайд</p></div>
+      </div>
+      <div class="tile acc rv" style="--d:1">
+        <h3>Большой каталог</h3>
+        <div><div class="big">Скидка</div><p class="cap">при большом количестве слайдов</p></div>
+      </div>
+      <div class="tile dark rv" style="--d:2">
+        <h3>Брошюра</h3>
+        <div><div class="big"><span data-count="6500">6&nbsp;500</span><small>₽</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head rv"><h2>Муслим Ибраков.</h2><p class="lede">Senior Brand Designer</p></div>
+    <div class="bento two">
+      <div class="tile rv" style="--d:0">
+        <h3>В дизайне</h3>
+        <div class="big"><span data-count="6.5" data-dec="1">6,5</span><small>лет</small></div>
+      </div>
+      <div class="tile rv" style="--d:1">
+        <h3>С фабрикой мороженого Halimbekaul</h3>
+        <div class="big"><span data-count="4">4</span><small>года</small></div>
+      </div>
+      <div class="tile span2 sp rv" style="--d:2">
+        <h3>Работал со строительными компаниями</h3>
+        <ul class="clients">
+          <li>Standart Realty</li>
+          <li>Elsam Group</li>
+          <li>Premier Group</li>
+          <li>Aktiv Development</li>
+          <li>Standart Development</li>
+          <li>Caspiana Residence Apart Hotel</li>
+          <li>Miramar Apart Hotel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grey" id="services">
+  <div class="wrap">
+    <div class="head rv"><h2>Другие услуги.</h2></div>
+    <div class="bento two">
+      <div class="tile dark sp rv" style="--d:0">
+        <div>
+          <h3>Брендбук</h3>
+          <div class="price"><small>от</small>150 000 ₽</div>
+          <ul class="inc">
+            <li>Платформа бренда: миссия, ценности, позиционирование</li>
+            <li>Логотип и правила его использования</li>
+            <li>Цветовая палитра и типографика</li>
+            <li>Графические элементы и стиль изображений</li>
+            <li>Tone of voice</li>
+            <li>Дизайн под каждый необходимый базовый носитель: визитки, пакеты, бирки, спецодежда, таблички и другое</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tile sp rv" style="--d:1">
+        <div>
+          <h3>Фирменный стиль</h3>
+          <div class="price"><small>от</small>75 000 ₽</div>
+          <ul class="inc">
+            <li>Логотип</li>
+            <li>Цвета и шрифты</li>
+            <li>Графические элементы</li>
+            <li>Базовые макеты: визитка, бланк, соцсети</li>
+            <li>Краткая инструкция по применению</li>
+          </ul>
+          <p class="note">Дешевле брендбука: это готовый набор элементов без стратегии бренда и подробного свода правил.</p>
+        </div>
+      </div>
+    </div>
+    <div class="list rv">
+      <div class="row">Одностраничный сайт<span>110 000 ₽</span></div>
+      <div class="row">Телеграм-бот<span class="m">цена уточняется</span></div>
+      <div class="row">Instagram, обложка<span>800 ₽</span></div>
+      <div class="row">Instagram, слайд<span>800 ₽</span></div>
+      <div class="row">Презентация, слайд<span>1 000 ₽</span></div>
+      <div class="row">Статичный билборд-баннер<span>7 000 ₽</span></div>
+      <div class="row">Видеобаннер<span>10 000 ₽</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <a class="cta rv" href="https://ibrakovportfolio.tilda.ws/" target="_blank" rel="noopener">
+      <h2>Смотреть все кейсы.</h2>
+      <span class="arr" aria-hidden="true">›</span>
+    </a>
+  </div>
+</section>
+
+<script>
+(function(){
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);
+    [].slice.call(e.target.querySelectorAll('[data-count]')).forEach(count);}
+});},{threshold:.18});
+[].slice.call(document.querySelectorAll('.rv')).forEach(function(el){io.observe(el)});
+function count(el){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var to=parseFloat(el.dataset.count),dec=+el.dataset.dec||0,t0=null,dur=1500;
+  function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/dur,1),v=to*(1-Math.pow(1-p,4));
+    var s=dec?v.toFixed(dec).replace('.',','):Math.round(v).toString();
+    if(to>=1000)s=s.replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+    el.textContent=s;if(p<1)requestAnimationFrame(f);}
+  requestAnimationFrame(f);
+}
+})();
+</script>
+</body>
+</html>
